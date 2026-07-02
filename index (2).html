@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charan K — AI/ML Engineer &amp; Researcher</title>
+<meta name="description" content="Charan K — M.Tech AI student building LLM agents, RAG pipelines, and temporal graph neural networks.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#0B1220;
+    --ink-soft:#111A2E;
+    --paper:#E9E7E1;
+    --paper-dim:#9BA3B4;
+    --teal:#5EEAD4;
+    --amber:#F5A623;
+    --line: rgba(233,231,225,0.12);
+    --line-strong: rgba(233,231,225,0.22);
+    --radius: 3px;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  ::selection{background:var(--teal);color:var(--ink);}
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    background:rgba(11,18,32,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1080px;
+    margin:0 auto;
+    padding:18px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .nav-mark{
+    font-family:var(--mono);
+    font-size:14px;
+    letter-spacing:0.02em;
+    color:var(--teal);
+  }
+  .nav-links{
+    display:flex;
+    gap:28px;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--paper-dim);
+  }
+  .nav-links a{transition:color .2s ease;}
+  .nav-links a:hover{color:var(--teal);}
+  .nav-toggle{display:none;}
+
+  @media (max-width:720px){
+    .nav-links{
+      position:fixed;
+      top:58px;left:0;right:0;
+      background:var(--ink-soft);
+      border-bottom:1px solid var(--line);
+      flex-direction:column;
+      gap:0;
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .3s ease;
+    }
+    .nav-links.open{max-height:320px;}
+    .nav-links a{padding:16px 32px;border-top:1px solid var(--line);}
+    .nav-toggle{
+      display:block;
+      background:none;border:1px solid var(--line-strong);
+      color:var(--paper);
+      font-family:var(--mono);
+      font-size:12px;
+      padding:8px 12px;
+      border-radius:var(--radius);
+      cursor:pointer;
+    }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    padding-top:80px;
+  }
+  #graph-canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    opacity:0.55;
+  }
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 32px;
+    width:100%;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--teal);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:22px;height:1px;
+    background:var(--teal);
+    display:inline-block;
+  }
+  .hero h1{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(2.4rem, 6vw, 4.4rem);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    max-width:820px;
+    margin-bottom:24px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--teal);
+  }
+  .hero p.lede{
+    font-size:1.1rem;
+    color:var(--paper-dim);
+    max-width:600px;
+    margin-bottom:36px;
+  }
+  .hero-cta{
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    padding:14px 24px;
+    border-radius:var(--radius);
+    border:1px solid var(--line-strong);
+    transition:all .2s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn-primary{
+    background:var(--teal);
+    color:var(--ink);
+    border-color:var(--teal);
+    font-weight:500;
+  }
+  .btn-primary:hover{background:#7ff2df;}
+  .btn-ghost{color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+
+  .scroll-cue{
+    position:absolute;
+    bottom:32px;left:32px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--paper-dim);
+    z-index:2;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .scroll-cue span.line{width:1px;height:34px;background:var(--line-strong);display:inline-block;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:0.3;}50%{opacity:1;}}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{
+    padding:110px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:56px;
+  }
+  .section-tag{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--teal);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .section-head h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(1.6rem,3.4vw,2.2rem);
+  }
+  .section-head::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:64px;
+  }
+  .about-grid p{
+    color:var(--paper-dim);
+    font-size:1.02rem;
+    margin-bottom:18px;
+  }
+  .about-grid p strong{color:var(--paper);font-weight:500;}
+  .stat-list{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+    border-left:1px solid var(--line);
+    padding-left:28px;
+  }
+  .stat{
+    font-family:var(--mono);
+  }
+  .stat .num{
+    font-size:1.8rem;
+    color:var(--teal);
+    font-family:var(--display);
+    display:block;
+  }
+  .stat .label{
+    font-size:12px;
+    color:var(--paper-dim);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+
+  @media (max-width:800px){
+    .about-grid{grid-template-columns:1fr;gap:36px;}
+    .stat-list{flex-direction:row;flex-wrap:wrap;border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:24px;gap:28px 40px;}
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:36px;
+  }
+  .skill-group h3{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--paper-dim);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:16px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .tag-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .tag{
+    font-family:var(--mono);
+    font-size:12px;
+    padding:6px 12px;
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    color:var(--paper-dim);
+    transition:all .2s ease;
+  }
+  .tag:hover{color:var(--teal);border-color:var(--teal);}
+
+  @media (max-width:800px){
+    .skill-groups{grid-template-columns:1fr;gap:28px;}
+  }
+
+  /* ---------- EXPERIENCE TIMELINE ---------- */
+  .timeline{
+    position:relative;
+    padding-left:40px;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:6px;top:6px;bottom:6px;
+    width:1px;
+    background:var(--line-strong);
+  }
+  .t-item{
+    position:relative;
+    margin-bottom:52px;
+  }
+  .t-item:last-child{margin-bottom:0;}
+  .t-item::before{
+    content:'';
+    position:absolute;
+    left:-40px;top:6px;
+    width:11px;height:11px;
+    border-radius:50%;
+    background:var(--ink);
+    border:2px solid var(--teal);
+  }
+  .t-date{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--teal);
+    margin-bottom:6px;
+    display:block;
+  }
+  .t-item h3{
+    font-family:var(--display);
+    font-size:1.25rem;
+    font-weight:600;
+    margin-bottom:4px;
+  }
+  .t-item .org{
+    color:var(--paper-dim);
+    font-size:0.95rem;
+    margin-bottom:14px;
+    display:block;
+  }
+  .t-item ul{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .t-item ul li{
+    color:var(--paper-dim);
+    font-size:0.95rem;
+    padding-left:18px;
+    position:relative;
+  }
+  .t-item ul li::before{
+    content:'—';
+    position:absolute;
+    left:0;
+    color:var(--line-strong);
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .project-card{
+    background:var(--ink);
+    padding:32px;
+    display:flex;
+    flex-direction:column;
+    transition:background .25s ease;
+  }
+  .project-card:hover{background:var(--ink-soft);}
+  .project-card .p-tag{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--amber);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:14px;
+  }
+  .project-card h3{
+    font-family:var(--display);
+    font-size:1.15rem;
+    font-weight:600;
+    margin-bottom:12px;
+    line-height:1.3;
+  }
+  .project-card p{
+    color:var(--paper-dim);
+    font-size:0.92rem;
+    margin-bottom:18px;
+    flex:1;
+  }
+  .project-card .tech{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--paper-dim);
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+
+  @media (max-width:900px){
+    .project-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- RESEARCH ---------- */
+  .research-panel{
+    border:1px solid var(--line-strong);
+    padding:44px;
+    position:relative;
+    background:linear-gradient(135deg, rgba(94,234,212,0.04), transparent 60%);
+  }
+  .research-panel::before{
+    content:'RESEARCH';
+    position:absolute;
+    top:-11px;left:40px;
+    background:var(--ink);
+    padding:0 10px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.1em;
+    color:var(--teal);
+  }
+  .research-panel h3{
+    font-family:var(--display);
+    font-size:1.5rem;
+    font-weight:600;
+    margin-bottom:14px;
+    max-width:640px;
+  }
+  .research-panel p.desc{
+    color:var(--paper-dim);
+    max-width:680px;
+    margin-bottom:24px;
+  }
+  .research-facts{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+    margin-bottom:24px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+  .research-facts .f-num{
+    font-family:var(--display);
+    color:var(--teal);
+    font-size:1.4rem;
+    display:block;
+  }
+  .research-facts .f-label{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--paper-dim);
+    text-transform:uppercase;
+  }
+  .research-panel .venue{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--amber);
+  }
+  @media (max-width:800px){
+    .research-panel{padding:28px;}
+    .research-facts{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-list{
+    display:flex;
+    flex-direction:column;
+  }
+  .edu-item{
+    display:grid;
+    grid-template-columns:140px 1fr auto;
+    gap:24px;
+    padding:22px 0;
+    border-top:1px solid var(--line);
+    align-items:baseline;
+  }
+  .edu-item:last-child{border-bottom:1px solid var(--line);}
+  .edu-item .yr{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--paper-dim);
+  }
+  .edu-item .deg{font-weight:500;}
+  .edu-item .inst{color:var(--paper-dim);font-size:0.9rem;}
+  .edu-item .score{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--teal);
+    white-space:nowrap;
+  }
+  @media (max-width:640px){
+    .edu-item{grid-template-columns:1fr;gap:4px;}
+    .edu-item .score{margin-top:4px;}
+  }
+
+  .cert-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:28px;
+  }
+  .cert-row .tag{color:var(--paper-dim);}
+
+  /* ---------- CONTACT ---------- */
+  .contact{border-bottom:none;}
+  .contact-inner{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .contact h2.big{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(2rem,5vw,3.2rem);
+    max-width:700px;
+    margin-bottom:28px;
+  }
+  .contact h2.big em{font-style:normal;color:var(--teal);}
+  .contact-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-top:8px;
+  }
+  footer{
+    padding:28px 0 40px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--paper-dim);
+    display:flex;
+    justify-content:space-between;
+    max-width:1080px;
+    margin:0 auto;
+    padding-left:32px;padding-right:32px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .scroll-cue span.line{animation:none;}
+    #graph-canvas{opacity:0.3;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-mark">CHARAN.K</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">MENU</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#research">Research</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <canvas id="graph-canvas"></canvas>
+  <div class="hero-inner">
+    <div class="eyebrow">M.Tech Artificial Intelligence · Coimbatore, India</div>
+    <h1>Building <em>agentic AI systems</em> and graph-based models that reason over real-world data.</h1>
+    <p class="lede">I'm Charan K — I design LLM agents, RAG pipelines, and temporal graph neural networks, and ship them as production-grade systems using Docker, Kubernetes, and AWS.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects →</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="line"></span>SCROLL</div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">01 / About</span>
+      <h2>Who I am</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p><strong>M.Tech Artificial Intelligence</strong> student at Amrita Vishwa Vidyapeetham, Coimbatore, with hands-on experience building LLM agents, RAG pipelines, and end-to-end ML systems.</p>
+        <p>Proficient in <strong>PyTorch</strong>, <strong>Hugging Face Transformers</strong>, and agentic AI frameworks. I design and evaluate LLM-based systems, implement ideas from recent NLP/ML research (NeurIPS, ICML, ACL), and deploy production pipelines on <strong>Docker</strong>, <strong>Kubernetes</strong>, and <strong>AWS</strong>.</p>
+        <p>Currently exploring agentic data engineering, LLM fine-tuning, and structured data reasoning across SQL and graph-based models — and actively seeking full-time AI/ML roles.</p>
+      </div>
+      <div class="stat-list">
+        <div class="stat"><span class="num">2</span><span class="label">AI/ML Internships</span></div>
+        <div class="stat"><span class="num">4</span><span class="label">Major Projects Shipped</span></div>
+        <div class="stat"><span class="num">704</span><span class="label">Stocks Modeled in Research</span></div>
+        <div class="stat"><span class="num">1</span><span class="label">Paper Submitted — ICST 2026</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">02 / Stack</span>
+      <h2>Technical Skills</h2>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">JavaScript</span>
+          <span class="tag">React</span><span class="tag">React Native</span><span class="tag">Node.js</span>
+          <span class="tag">Next.js</span><span class="tag">Nest.js</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>AI &amp; ML</h3>
+        <div class="tag-row">
+          <span class="tag">LLMs</span><span class="tag">Agentic AI</span><span class="tag">RAG Pipelines</span>
+          <span class="tag">LLM Evals</span><span class="tag">Prompt Engineering</span><span class="tag">Computer Vision</span>
+          <span class="tag">Graph Neural Networks</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Frameworks</h3>
+        <div class="tag-row">
+          <span class="tag">PyTorch</span><span class="tag">Hugging Face</span><span class="tag">TensorFlow</span>
+          <span class="tag">Keras</span><span class="tag">Flask</span><span class="tag">Fastify</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>MLOps &amp; Infra</h3>
+        <div class="tag-row">
+          <span class="tag">AWS</span><span class="tag">EKS</span><span class="tag">MLflow</span>
+          <span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">Streamlit</span>
+          <span class="tag">DynamoDB</span><span class="tag">Vector DBs</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Other</h3>
+        <div class="tag-row">
+          <span class="tag">REST APIs</span><span class="tag">Experiment Tracking</span>
+          <span class="tag">Model Deployment</span><span class="tag">Data Pipelines</span>
+          <span class="tag">Structured Data Reasoning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">03 / Track record</span>
+      <h2>Experience</h2>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <span class="t-date">Nov 2025 — May 2026</span>
+        <h3>AI Software Developer Intern</h3>
+        <span class="org">Home Ideas Technologies</span>
+        <ul>
+          <li>Designed and deployed Retrieval-Augmented Generation (RAG) pipelines using vector databases and LLMs for real-time AI-powered features, reducing query latency via semantic search layers.</li>
+          <li>Built agentic backend workflows with Node.js and Fastify orchestrating LLM API calls, tool use, and structured data retrieval across web and mobile platforms.</li>
+          <li>Deployed containerized AI applications on AWS using Docker and Amazon EKS for scalable, cloud-native LLM services.</li>
+          <li>Developed responsive web (React) and cross-platform mobile (React Native) interfaces integrated with AI backends.</li>
+          <li>Collaborated directly with the founding team on architecture decisions covering data ingestion, model serving, and API design.</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <span class="t-date">Jul 2025 — Dec 2025</span>
+        <h3>AI/ML Intern</h3>
+        <span class="org">LABMENTIX</span>
+        <ul>
+          <li>Developed and optimized machine learning and deep learning models for real-world use cases, improving performance and reliability.</li>
+          <li>Implemented computer vision and data analysis workflows using TensorFlow, PyTorch, and Keras.</li>
+          <li>Built end-to-end ML pipelines covering preprocessing, feature engineering, model training, experiment tracking (MLflow), and deployment readiness.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">04 / Selected work</span>
+      <h2>Projects</h2>
+    </div>
+  </div>
+  <div class="project-grid">
+    <div class="project-card">
+      <span class="p-tag">Agentic AI</span>
+      <h3>Autonomous Research Agent with Self-Growing Knowledge Base</h3>
+      <p>A fully autonomous LLM agent that decomposes research objectives into sub-tasks via chain-of-thought reasoning and tool use, expanding a vectorized knowledge base through confidence-driven re-research loops. Evaluated on task completion rate, hallucination rate, and retrieval precision.</p>
+      <div class="tech">Python · LLMs · RAG · Hugging Face · Vector DBs · Agentic Frameworks</div>
+    </div>
+    <div class="project-card">
+      <span class="p-tag">Computer Vision</span>
+      <h3>GlaucoVision — Automated Glaucoma Detection</h3>
+      <p>A hybrid deep learning system combining GAN-based data augmentation and U-Net segmentation for optic disc/cup detection, with a VAE-CNN classifier computing Cup-to-Disc Ratio for early-stage glaucoma screening under limited labeled data.</p>
+      <div class="tech">PyTorch · GAN · U-Net · VAE-CNN · Medical Imaging</div>
+    </div>
+    <div class="project-card">
+      <span class="p-tag">MLOps</span>
+      <h3>Voyage Analytics Platform</h3>
+      <p>An end-to-end cloud-native ML platform covering SQL-based feature engineering, model training, MLflow experiment tracking, Flask REST inference, and Kubernetes orchestration, with a Streamlit dashboard for interactive analysis.</p>
+      <div class="tech">Python · MLflow · Flask · Docker · Kubernetes · Streamlit · SQL</div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">05 / Research</span>
+      <h2>Published &amp; Submitted Work</h2>
+    </div>
+    <div class="research-panel">
+      <h3>Causally-Aware Temporal Graph Neural Network for Stock Influence Prediction</h3>
+      <p class="desc">A hybrid TGNN framework (GAT-GRU) modeling dynamic stock interaction networks — designed end-to-end from problem scoping to statistical validation. Introduces a Temporal Gravity Model and Hybrid Influence Score to capture structural and temporal dependencies in financial graph data, with Granger causality and F-tests validating causal influence beyond correlation.</p>
+      <div class="research-facts">
+        <div><span class="f-num">704</span><span class="f-label">BSE Stocks</span></div>
+        <div><span class="f-num">1,500+</span><span class="f-label">Trading Days</span></div>
+        <div><span class="f-num">GAT-GRU</span><span class="f-label">Architecture</span></div>
+        <div><span class="f-num">Granger</span><span class="f-label">Causal Validation</span></div>
+      </div>
+      <span class="venue">→ Submitted to ICST 2026, IIT Patna</span>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">06 / Education</span>
+      <h2>Academic Background</h2>
+    </div>
+    <div class="edu-list">
+      <div class="edu-item">
+        <span class="yr">2024 – 2026</span>
+        <div>
+          <div class="deg">M.Tech, Artificial Intelligence</div>
+          <div class="inst">Amrita Vishwa Vidyapeetham, Coimbatore</div>
+        </div>
+        <span class="score">CGPA 7.12</span>
+      </div>
+      <div class="edu-item">
+        <span class="yr">2020 – 2024</span>
+        <div>
+          <div class="deg">B.E., Computer Science and Engineering</div>
+          <div class="inst">Sathyabama Institute of Science and Technology</div>
+        </div>
+        <span class="score">CGPA 8.74</span>
+      </div>
+      <div class="edu-item">
+        <span class="yr">2020</span>
+        <div>
+          <div class="deg">HSC</div>
+          <div class="inst">Sri Vijay Vidyalaya Matric Higher Secondary School</div>
+        </div>
+        <span class="score">77%</span>
+      </div>
+      <div class="edu-item">
+        <span class="yr">2018</span>
+        <div>
+          <div class="deg">SSLC</div>
+          <div class="inst">Sri Vijay Vidyalaya Matric Higher Secondary School</div>
+        </div>
+        <span class="score">97.8%</span>
+      </div>
+    </div>
+    <div class="cert-row">
+      <span class="tag">Geodata Processing Using Python and ML — ISRO</span>
+      <span class="tag">100 Days of Python Bootcamp — Udemy</span>
+      <span class="tag">Data Science — ExcelR</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap contact-inner">
+    <span class="section-tag" style="margin-bottom:20px;">07 / Contact</span>
+    <h2 class="big">Open to full-time AI/ML roles — let's <em>build something.</em></h2>
+    <div class="contact-links">
+      <a href="mailto:k.charankumar73@gmail.com" class="btn btn-primary">k.charankumar73@gmail.com</a>
+      <a href="https://linkedin.com/in/k-charan-/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
+      <a href="https://github.com/Charancode1" target="_blank" rel="noopener" class="btn btn-ghost">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Charan K</span>
+  <span>Built with care, deployed on GitHub Pages</span>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', false);
+  }));
+
+  // Hero graph animation — nodes labelled with core skill areas,
+  // referencing Charan's graph-neural-network research visually.
+  const canvas = document.getElementById('graph-canvas');
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W, H, nodes = [];
+  const labels = ['LLM', 'RAG', 'GNN', 'Agentic', 'Vision', 'MLOps', 'Graph', 'Eval'];
+
+  function resize(){
+    W = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    H = canvas.height = canvas.offsetHeight * devicePixelRatio;
+  }
+
+  function initNodes(){
+    nodes = [];
+    const count = window.innerWidth < 720 ? 10 : 16;
+    for(let i=0;i<count;i++){
+      nodes.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        vx: (Math.random()-0.5)*0.15*devicePixelRatio,
+        vy: (Math.random()-0.5)*0.15*devicePixelRatio,
+        r: (Math.random()*1.6+1.4)*devicePixelRatio,
+        label: i < labels.length ? labels[i] : null
+      });
+    }
+  }
+
+  function step(){
+    ctx.clearRect(0,0,W,H);
+    for(const n of nodes){
+      n.x += n.vx; n.y += n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1;
+      if(n.y<0||n.y>H) n.vy*=-1;
+    }
+    const maxDist = 260*devicePixelRatio;
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const a=nodes[i], b=nodes[j];
+        const d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(d < maxDist){
+          ctx.strokeStyle = `rgba(94,234,212,${(1-d/maxDist)*0.35})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    for(const n of nodes){
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle = n.label ? '#F5A623' : '#5EEAD4';
+      ctx.fill();
+      if(n.label){
+        ctx.font = `${11*devicePixelRatio}px 'JetBrains Mono', monospace`;
+        ctx.fillStyle = 'rgba(233,231,225,0.55)';
+        ctx.fillText(n.label, n.x+8*devicePixelRatio, n.y+4*devicePixelRatio);
+      }
+    }
+    if(!reduceMotion) requestAnimationFrame(step);
+  }
+
+  window.addEventListener('resize', () => { resize(); initNodes(); });
+  resize();
+  initNodes();
+  step();
+</script>
+
+</body>
+</html>
