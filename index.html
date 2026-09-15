@@ -387,7 +387,7 @@
   /* ---------- PROJECTS ---------- */
   .project-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(3, 1fr);
     gap:1px;
     background:var(--line);
     border:1px solid var(--line);
@@ -399,8 +399,9 @@
     flex-direction:column;
     transition:background .25s ease;
   }
-  .project-card.full-width{
-    grid-column: 1 / -1;
+  .project-card:last-child{
+    grid-column: 1 / -1 !important;
+    width: 100%;
   }
   .project-card:hover{background:var(--ink-soft);}
   .project-card .p-tag{
@@ -434,6 +435,7 @@
 
   @media (max-width:900px){
     .project-grid{grid-template-columns:1fr;}
+    .project-card:last-child{grid-column:auto !important;}
   }
 
   /* ---------- RESEARCH ---------- */
@@ -747,7 +749,7 @@
       <p>An end-to-end cloud-native ML platform covering SQL-based feature engineering, model training, MLflow experiment tracking, Flask REST inference, and Kubernetes (Minikube) orchestration, with a Streamlit dashboard for interactive analysis.</p>
       <div class="tech">Python · MLflow · Flask · Docker · Kubernetes · Streamlit · SQL</div>
     </div>
-    <div class="project-card full-width">
+    <div class="project-card">
       <span class="p-tag">Hackathon</span>
       <h3>RazorDefense — Autonomous Revenue Defense Platform</h3>
       <p>Built at the Razorpay AI Buildathon and later open-sourced: an agentic commerce and revenue-recovery platform where autonomous agents detect failed payments in real time and deploy Gemini-powered shopper agents to win back at-risk revenue through Razorpay's Test Mode. Layered in policy guardrails, customer-consent workflows, real-time merchant monitoring, and tamper-evident audit trails for safe, transparent operation.</p>
