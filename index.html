@@ -1,935 +1,876 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Charan K — AI/ML Engineer &amp; Researcher</title>
-<meta name="description" content="Charan K — ML Engineer building LLM agents, RAG pipelines, and temporal graph neural networks.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charan K — The Engineer's Workbench</title>
+  <meta name="description" content="Charan K — Forward Deployed Engineer building software systems, agentic AI, and production infrastructure.">
+  <meta name="author" content="Charan K">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Google Fonts: Handwritten (Caveat, Gochi Hand), Display (Fraunces), Body (DM Sans), Code (JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..800&family=Gochi+Hand&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
-<style>
-  :root{
-    --ink:#0B1220;
-    --ink-soft:#111A2E;
-    --paper:#E9E7E1;
-    --paper-dim:#9BA3B4;
-    --teal:#5EEAD4;
-    --amber:#F5A623;
-    --line: rgba(233,231,225,0.12);
-    --line-strong: rgba(233,231,225,0.22);
-    --radius: 3px;
-    --display: 'Space Grotesk', sans-serif;
-    --body: 'Inter', sans-serif;
-    --mono: 'JetBrains Mono', monospace;
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-
-  html{scroll-behavior:smooth;}
-
-  body{
-    background:var(--ink);
-    color:var(--paper);
-    font-family:var(--body);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-
-  a{color:inherit;text-decoration:none;}
-
-  .wrap{
-    max-width:1080px;
-    margin:0 auto;
-    padding:0 32px;
-  }
-
-  ::selection{background:var(--teal);color:var(--ink);}
-
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--teal);
-    outline-offset:3px;
-  }
-
-  /* ---------- NAV ---------- */
-  header.nav{
-    position:fixed;
-    top:0;left:0;right:0;
-    z-index:100;
-    background:rgba(11,18,32,0.85);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav-inner{
-    max-width:1080px;
-    margin:0 auto;
-    padding:18px 32px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-  }
-  .nav-mark{
-    font-family:var(--mono);
-    font-size:14px;
-    letter-spacing:0.02em;
-    color:var(--teal);
-  }
-  .nav-links{
-    display:flex;
-    gap:28px;
-    font-family:var(--mono);
-    font-size:13px;
-    color:var(--paper-dim);
-  }
-  .nav-links a{transition:color .2s ease;}
-  .nav-links a:hover{color:var(--teal);}
-  .nav-toggle{display:none;}
-
-  @media (max-width:720px){
-    .nav-links{
-      position:fixed;
-      top:58px;left:0;right:0;
-      background:var(--ink-soft);
-      border-bottom:1px solid var(--line);
-      flex-direction:column;
-      gap:0;
-      max-height:0;
-      overflow:hidden;
-      transition:max-height .3s ease;
-    }
-    .nav-links.open{max-height:320px;}
-    .nav-links a{padding:16px 32px;border-top:1px solid var(--line);}
-    .nav-toggle{
-      display:block;
-      background:none;border:1px solid var(--line-strong);
-      color:var(--paper);
-      font-family:var(--mono);
-      font-size:12px;
-      padding:8px 12px;
-      border-radius:var(--radius);
-      cursor:pointer;
-    }
-  }
-
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    overflow:hidden;
-    padding-top:80px;
-  }
-  #graph-canvas{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    opacity:0.55;
-  }
-  .hero-inner{
-    position:relative;
-    z-index:2;
-    max-width:1080px;
-    margin:0 auto;
-    padding:0 32px;
-    width:100%;
-  }
-  .eyebrow{
-    font-family:var(--mono);
-    font-size:13px;
-    color:var(--teal);
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    margin-bottom:20px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .eyebrow::before{
-    content:'';
-    width:22px;height:1px;
-    background:var(--teal);
-    display:inline-block;
-  }
-  .hero h1{
-    font-family:var(--display);
-    font-weight:600;
-    font-size:clamp(2.4rem, 6vw, 4.4rem);
-    line-height:1.05;
-    letter-spacing:-0.01em;
-    max-width:820px;
-    margin-bottom:24px;
-  }
-  .hero h1 em{
-    font-style:normal;
-    color:var(--teal);
-  }
-  .hero p.lede{
-    font-size:1.1rem;
-    color:var(--paper-dim);
-    max-width:600px;
-    margin-bottom:36px;
-  }
-  .hero-cta{
-    display:flex;
-    gap:16px;
-    flex-wrap:wrap;
-  }
-  .btn{
-    font-family:var(--mono);
-    font-size:13px;
-    padding:14px 24px;
-    border-radius:var(--radius);
-    border:1px solid var(--line-strong);
-    transition:all .2s ease;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-  }
-  .btn-primary{
-    background:var(--teal);
-    color:var(--ink);
-    border-color:var(--teal);
-    font-weight:500;
-  }
-  .btn-primary:hover{background:#7ff2df;}
-  .btn-ghost{color:var(--paper);}
-  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
-
-  .scroll-cue{
-    position:absolute;
-    bottom:32px;left:32px;
-    font-family:var(--mono);
-    font-size:11px;
-    color:var(--paper-dim);
-    z-index:2;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .scroll-cue span.line{width:1px;height:34px;background:var(--line-strong);display:inline-block;animation:pulse 2s infinite;}
-  @keyframes pulse{0%,100%{opacity:0.3;}50%{opacity:1;}}
-
-  /* ---------- SECTION SHARED ---------- */
-  section{
-    padding:110px 0;
-    border-bottom:1px solid var(--line);
-  }
-  .section-head{
-    display:flex;
-    align-items:baseline;
-    gap:16px;
-    margin-bottom:56px;
-  }
-  .section-tag{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--teal);
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    white-space:nowrap;
-  }
-  .section-head h2{
-    font-family:var(--display);
-    font-weight:600;
-    font-size:clamp(1.6rem,3.4vw,2.2rem);
-  }
-  .section-head::after{
-    content:'';
-    flex:1;
-    height:1px;
-    background:var(--line);
-  }
-
-  /* ---------- ABOUT ---------- */
-  .about-grid{
-    display:grid;
-    grid-template-columns:1.4fr 1fr;
-    gap:64px;
-  }
-  .about-grid p{
-    color:var(--paper-dim);
-    font-size:1.02rem;
-    margin-bottom:18px;
-  }
-  .about-grid p strong{color:var(--paper);font-weight:500;}
-  .stat-list{
-    display:flex;
-    flex-direction:column;
-    gap:24px;
-    border-left:1px solid var(--line);
-    padding-left:28px;
-  }
-  .stat{
-    font-family:var(--mono);
-  }
-  .stat .num{
-    font-size:1.8rem;
-    color:var(--teal);
-    font-family:var(--display);
-    display:block;
-  }
-  .stat .label{
-    font-size:12px;
-    color:var(--paper-dim);
-    text-transform:uppercase;
-    letter-spacing:0.05em;
-  }
-
-  @media (max-width:800px){
-    .about-grid{grid-template-columns:1fr;gap:36px;}
-    .stat-list{flex-direction:row;flex-wrap:wrap;border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:24px;gap:28px 40px;}
-  }
-
-  /* ---------- SKILLS ---------- */
-  .skill-groups{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:36px;
-  }
-  .skill-group h3{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--paper-dim);
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    margin-bottom:16px;
-    padding-bottom:12px;
-    border-bottom:1px solid var(--line);
-  }
-  .tag-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-  .tag{
-    font-family:var(--mono);
-    font-size:12px;
-    padding:6px 12px;
-    border:1px solid var(--line-strong);
-    border-radius:var(--radius);
-    color:var(--paper-dim);
-    transition:all .2s ease;
-  }
-  .tag:hover{color:var(--teal);border-color:var(--teal);}
-
-  @media (max-width:800px){
-    .skill-groups{grid-template-columns:1fr;gap:28px;}
-  }
-
-  /* ---------- EXPERIENCE TIMELINE ---------- */
-  .timeline{
-    position:relative;
-    padding-left:40px;
-  }
-  .timeline::before{
-    content:'';
-    position:absolute;
-    left:6px;top:6px;bottom:6px;
-    width:1px;
-    background:var(--line-strong);
-  }
-  .t-item{
-    position:relative;
-    margin-bottom:52px;
-  }
-  .t-item:last-child{margin-bottom:0;}
-  .t-item::before{
-    content:'';
-    position:absolute;
-    left:-40px;top:6px;
-    width:11px;height:11px;
-    border-radius:50%;
-    background:var(--ink);
-    border:2px solid var(--teal);
-  }
-  .t-date{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--teal);
-    margin-bottom:6px;
-    display:block;
-  }
-  .t-item h3{
-    font-family:var(--display);
-    font-size:1.25rem;
-    font-weight:600;
-    margin-bottom:4px;
-  }
-  .t-item .org{
-    color:var(--paper-dim);
-    font-size:0.95rem;
-    margin-bottom:14px;
-    display:block;
-  }
-  .t-item ul{
-    list-style:none;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-  }
-  .t-item ul li{
-    color:var(--paper-dim);
-    font-size:0.95rem;
-    padding-left:18px;
-    position:relative;
-  }
-  .t-item ul li::before{
-    content:'—';
-    position:absolute;
-    left:0;
-    color:var(--line-strong);
-  }
-
-  /* ---------- PROJECTS ---------- */
-  .project-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-  }
-  .project-card{
-    background:var(--ink);
-    padding:32px;
-    display:flex;
-    flex-direction:column;
-    transition:background .25s ease;
-  }
-  .project-card:last-child{
-    grid-column: 1 / -1 !important;
-    width: 100%;
-  }
-  .project-card:hover{background:var(--ink-soft);}
-  .project-card .p-tag{
-    font-family:var(--mono);
-    font-size:11px;
-    color:var(--amber);
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    margin-bottom:14px;
-  }
-  .project-card h3{
-    font-family:var(--display);
-    font-size:1.15rem;
-    font-weight:600;
-    margin-bottom:12px;
-    line-height:1.3;
-  }
-  .project-card p{
-    color:var(--paper-dim);
-    font-size:0.92rem;
-    margin-bottom:18px;
-    flex:1;
-  }
-  .project-card .tech{
-    font-family:var(--mono);
-    font-size:11px;
-    color:var(--paper-dim);
-    border-top:1px solid var(--line);
-    padding-top:14px;
-  }
-
-  @media (max-width:900px){
-    .project-grid{grid-template-columns:1fr;}
-    .project-card:last-child{grid-column:auto !important;}
-  }
-
-  /* ---------- RESEARCH ---------- */
-  .research-panel{
-    border:1px solid var(--line-strong);
-    padding:44px;
-    position:relative;
-    background:linear-gradient(135deg, rgba(94,234,212,0.04), transparent 60%);
-  }
-  .research-panel::before{
-    content:'RESEARCH';
-    position:absolute;
-    top:-11px;left:40px;
-    background:var(--ink);
-    padding:0 10px;
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:0.1em;
-    color:var(--teal);
-  }
-  .research-panel h3{
-    font-family:var(--display);
-    font-size:1.5rem;
-    font-weight:600;
-    margin-bottom:14px;
-    max-width:640px;
-  }
-  .research-panel p.desc{
-    color:var(--paper-dim);
-    max-width:680px;
-    margin-bottom:24px;
-  }
-  .research-facts{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:24px;
-    margin-bottom:24px;
-    padding-top:24px;
-    border-top:1px solid var(--line);
-  }
-  .research-facts .f-num{
-    font-family:var(--display);
-    color:var(--teal);
-    font-size:1.4rem;
-    display:block;
-  }
-  .research-facts .f-label{
-    font-family:var(--mono);
-    font-size:11px;
-    color:var(--paper-dim);
-    text-transform:uppercase;
-  }
-  .research-panel .venue{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--amber);
-  }
-  @media (max-width:800px){
-    .research-panel{padding:28px;}
-    .research-facts{grid-template-columns:repeat(2,1fr);}
-  }
-
-  /* ---------- EDUCATION ---------- */
-  .edu-list{
-    display:flex;
-    flex-direction:column;
-  }
-  .edu-item{
-    display:grid;
-    grid-template-columns:140px 1fr auto;
-    gap:24px;
-    padding:22px 0;
-    border-top:1px solid var(--line);
-    align-items:baseline;
-  }
-  .edu-item:last-child{border-bottom:1px solid var(--line);}
-  .edu-item .yr{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--paper-dim);
-  }
-  .edu-item .deg{font-weight:500;}
-  .edu-item .inst{color:var(--paper-dim);font-size:0.9rem;}
-  .edu-item .score{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--teal);
-    white-space:nowrap;
-  }
-  @media (max-width:640px){
-    .edu-item{grid-template-columns:1fr;gap:4px;}
-    .edu-item .score{margin-top:4px;}
-  }
-
-  .cert-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:28px;
-  }
-  .cert-row .tag{color:var(--paper-dim);}
-
-  /* ---------- CONTACT ---------- */
-  .contact{border-bottom:none;}
-  .contact-inner{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-  }
-  .contact h2.big{
-    font-family:var(--display);
-    font-weight:600;
-    font-size:clamp(2rem,5vw,3.2rem);
-    max-width:700px;
-    margin-bottom:28px;
-  }
-  .contact h2.big em{font-style:normal;color:var(--teal);}
-  .contact-links{
-    display:flex;
-    flex-wrap:wrap;
-    gap:16px;
-    margin-top:8px;
-  }
-  footer{
-    padding:28px 0 40px;
-    font-family:var(--mono);
-    font-size:11px;
-    color:var(--paper-dim);
-    display:flex;
-    justify-content:space-between;
-    max-width:1080px;
-    margin:0 auto;
-    padding-left:32px;padding-right:32px;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    .scroll-cue span.line{animation:none;}
-    #graph-canvas{opacity:0.3;}
-  }
-</style>
+  <link rel="stylesheet" href="style.css?v=20261026_compact">
 </head>
 <body>
 
-<header class="nav">
-  <div class="nav-inner">
-    <a href="#top" class="nav-mark">CHARAN.K</a>
-    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">MENU</button>
-    <nav class="nav-links" id="navLinks">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#research">Research</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
+  <!-- ========================================================================
+       FLOATING WORKBENCH TOOLBAR / NAVIGATION DOCK
+       ======================================================================== -->
+  <header class="workbench-dock-wrapper" id="dockNav" role="banner">
+    <nav class="workbench-dock" aria-label="Workbench navigation">
+      <div class="dock-avatar">
+        <span class="dock-avatar-doodle" aria-hidden="true">⚡</span>
+        <a href="#workbench-hero">Charan K</a>
+      </div>
+
+      <button class="mobile-dock-toggle" id="mobileDockToggle" aria-expanded="false" aria-controls="dockLinks">
+        MENU
+      </button>
+
+      <ul class="dock-links" id="dockLinks">
+        <li class="dock-item"><a href="#workbench-hero" class="active">✦ Desk</a></li>
+        <li class="dock-item"><a href="#workstation-experience">⚙ Experience</a></li>
+        <li class="dock-item"><a href="#work-playground">⚡ Systems</a></li>
+        <li class="dock-item"><a href="#research-workbench">🔬 Research</a></li>
+        <li class="dock-item"><a href="#capabilities-pegboard">🧰 Skills</a></li>
+        <li class="dock-item"><a href="#academic-binder">🎓 Academia</a></li>
+        <li class="dock-item"><a href="#postcard-connect">✉ Connect</a></li>
+        <li class="dock-item">
+          <a href="Charan_K_M_Tech_Resume.pdf" target="_blank" rel="noopener noreferrer" class="dock-pdf-btn">
+            <span>Resume (PDF)</span><span class="dock-pdf-arrow" aria-hidden="true">&nbsp;↗</span>
+          </a>
+        </li>
+      </ul>
     </nav>
-  </div>
-</header>
+  </header>
 
-<section class="hero" id="top">
-  <canvas id="graph-canvas"></canvas>
-  <div class="hero-inner">
-    <div class="eyebrow">M.Tech Artificial Intelligence</div>
-    <h1>Building <em>agentic AI systems</em> and graph-based models that reason over real-world data.</h1>
-    <p class="lede">I'm Charan K — I design LLM agents, RAG pipelines, and temporal graph neural networks, and ship them as production-grade systems using Docker, Kubernetes, and AWS.</p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">View Projects →</a>
-      <a href="#contact" class="btn btn-ghost">Get in touch</a>
-    </div>
-  </div>
-  <div class="scroll-cue"><span class="line"></span>SCROLL</div>
-</section>
+  <main id="main">
 
-<section id="about">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag">01 / About</span>
-      <h2>Who I am</h2>
-    </div>
-    <div class="about-grid">
-      <div>
-        <p><strong>M.Tech Artificial Intelligence</strong> graduate of Amrita Vishwa Vidyapeetham, Coimbatore, with hands-on experience building LLM agents, RAG pipelines, and end-to-end ML systems.</p>
-        <p>Proficient in <strong>PyTorch</strong>, <strong>Hugging Face Transformers</strong>, and agentic AI frameworks. I design and evaluate LLM-based systems, implement ideas from recent NLP/ML research (NeurIPS, ICML, ACL), and deploy production pipelines on <strong>Docker</strong>, <strong>Kubernetes</strong>, and <strong>AWS</strong>.</p>
-        <p>Currently working as an ML Engineer at PEPS-TECH Research and Development, building and deploying models for classification, detection, and automation on embedded and edge platforms — while continuing to explore agentic data engineering, LLM fine-tuning, and structured data reasoning across SQL and graph-based models.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- ========================================================================
+         SECTION 01: HERO DESK (OPENING WORKBENCH EXPERIENCE)
+         ======================================================================== -->
+    <section class="hero-desk-section" id="workbench-hero">
+      <div class="workbench-container">
+        
+        <!-- Centerpiece Engineer's Desk Mat -->
+        <div class="hero-mat-card">
+          <div class="washi-tape tape-top-center" aria-hidden="true"></div>
+          <div class="paperclip" aria-hidden="true"></div>
 
-<section id="skills">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag">02 / Stack</span>
-      <h2>Technical Skills</h2>
-    </div>
-    <div class="skill-groups">
-      <div class="skill-group">
-        <h3>Languages</h3>
-        <div class="tag-row">
-          <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">JavaScript</span>
-          <span class="tag">React</span><span class="tag">React Native</span><span class="tag">Node.js</span>
-          <span class="tag">Next.js</span><span class="tag">Nest.js</span>
+          <div class="hero-greeting-row">
+            <div class="avatar-badge-doodle" aria-hidden="true">CK</div>
+            <div class="hero-badge-tag">Hey there, I'm Charan K!</div>
+          </div>
+
+          <h1 class="hero-main-title">
+            Turning ambiguous business problems into <em>working software</em> and <em>autonomous AI systems</em>.
+          </h1>
+
+          <!-- Forward Deployed Positioning Stamp -->
+          <div class="positioning-strip">
+            <span class="positioning-tag">Professional Direction</span>
+            <span class="positioning-text">
+              Forward Deployed Engineer | Software Systems | Applied AI
+            </span>
+          </div>
+
+          <!-- Resume Verbatim Professional Summary Notebook -->
+          <article class="summary-notebook-paper">
+            <div class="summary-notebook-label">Curriculum Vitae // Professional Summary</div>
+            <p class="summary-notebook-text">
+              M.Tech Artificial Intelligence graduate with hands-on experience building LLM agents, RAG pipelines, and end-to-end ML systems. Proficient in Full stack web development and agentic AI frameworks. Experienced in designing and evaluating LLM-based systems, implementing ideas from recent NLP/ML research (NeurIPS, ICML, ACL), and deploying production-grade AI pipelines using Docker, Kubernetes, and AWS. Actively exploring agentic data engineering, LLM fine-tuning, and structured data reasoning with SQL and graph-based models.
+            </p>
+          </article>
+
+          <!-- Interactive Lifecycle Dispatch Widget -->
+          <div class="interactive-pipeline-widget">
+            <div class="widget-header">
+              <span>Interactive Lifecycle Explorer — Click a phase to inspect how I build:</span>
+              <span style="color:var(--accent-orange); font-weight:600;">Full Product Lifecycle</span>
+            </div>
+
+            <div class="pipeline-steps-grid">
+              <button class="pipeline-step-btn active" data-step="1">
+                <span class="step-num">STAGE 01</span>
+                <span class="step-name">Problem Scoping</span>
+              </button>
+              <button class="pipeline-step-btn" data-step="2">
+                <span class="step-num">STAGE 02</span>
+                <span class="step-name">System Architecture</span>
+              </button>
+              <button class="pipeline-step-btn" data-step="3">
+                <span class="step-num">STAGE 03</span>
+                <span class="step-name">Systems &amp; AI Build</span>
+              </button>
+              <button class="pipeline-step-btn" data-step="4">
+                <span class="step-num">STAGE 04</span>
+                <span class="step-name">Cloud &amp; Edge Deploy</span>
+              </button>
+              <button class="pipeline-step-btn" data-step="5">
+                <span class="step-num">STAGE 05</span>
+                <span class="step-name">Production Lifecycle</span>
+              </button>
+            </div>
+
+            <div class="pipeline-desc-output" id="pipelineDescOutput">
+              <strong>01. Problem Scoping:</strong> Translating stakeholder ambiguity and operational friction into formal technical requirements, system boundaries, and success metrics.
+            </div>
+          </div>
+
+          <!-- Hero Actions -->
+          <div class="hero-cta-group">
+            <a href="#workstation-experience" class="workbench-btn workbench-btn-primary">
+              <span>Explore My Experience</span>
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a href="#work-playground" class="workbench-btn workbench-btn-secondary">
+              <span>Examine Selected Work</span>
+              <span aria-hidden="true">⚡</span>
+            </a>
+            <a href="Charan_K_M_Tech_Resume.pdf" target="_blank" rel="noopener noreferrer" class="workbench-btn workbench-btn-secondary">
+              <span>Download Resume PDF</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a href="#postcard-connect" class="workbench-btn workbench-btn-secondary">
+              <span>Say Hello</span>
+              <span aria-hidden="true">✉</span>
+            </a>
+          </div>
+
         </div>
-      </div>
-      <div class="skill-group">
-        <h3>AI &amp; ML</h3>
-        <div class="tag-row">
-          <span class="tag">LLMs</span><span class="tag">Agentic AI</span><span class="tag">RAG Pipelines</span>
-          <span class="tag">LLM Evals</span><span class="tag">Prompt Engineering</span><span class="tag">Computer Vision</span>
-          <span class="tag">Graph Neural Networks</span>
+
+        <!-- Surrounding Floating Workbench Notes -->
+        <div class="floating-stickies-container">
+          
+          <div class="sticky-note sticky-dispatch">
+            <div class="washi-tape tape-top-left" style="width:80px;" aria-hidden="true"></div>
+            <span class="sticky-tag-sm">⚡ CURRENT STATUS</span>
+            <div class="hand-note" style="font-size:1.45rem; margin-bottom:8px;">Shipping Real Systems!</div>
+            <p class="sticky-body-text">
+              Software Engineer at <strong>PEPS-TECH Research &amp; Development</strong>. Building embedded ML &amp; production platforms. Open to Forward Deployed roles.
+            </p>
+          </div>
+
+          <div class="sticky-note sticky-coral sticky-dispatch">
+            <div class="washi-tape tape-top-right" style="width:80px;" aria-hidden="true"></div>
+            <span class="sticky-tag-sm">🔬 RESEARCH DESK</span>
+            <div class="hand-note" style="font-size:1.45rem; margin-bottom:8px;">Temporal Graph Neural Nets</div>
+            <p class="sticky-body-text">
+              Accepted at <strong>CIS 2026, NIT Warangal</strong>. SCOPUS-indexed Springer LNNS publication analyzing BSE stock interaction networks.
+            </p>
+          </div>
+
+          <div class="sticky-note sticky-mint sticky-dispatch">
+            <div class="washi-tape tape-top-left" style="width:80px;" aria-hidden="true"></div>
+            <span class="sticky-tag-sm">📍 LOCATION &amp; CONTACT</span>
+            <div class="hand-note" style="font-size:1.45rem; margin-bottom:8px;">Tamil Nadu, India</div>
+            <p class="sticky-body-text">
+              Remote / Relocation ready.<br>
+              <strong>k.charankumar73@gmail.com</strong><br>
+              +91 97912 39230
+            </p>
+          </div>
+
         </div>
+
       </div>
-      <div class="skill-group">
-        <h3>Frameworks</h3>
-        <div class="tag-row">
-          <span class="tag">PyTorch</span><span class="tag">Hugging Face</span><span class="tag">TensorFlow</span>
-          <span class="tag">Keras</span><span class="tag">Flask</span><span class="tag">Fastify</span>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 02: WORK IN THE FIELD (EXPERIENCE JOURNEY)
+         ======================================================================== -->
+    <section class="workbench-section" id="workstation-experience">
+      <div class="workbench-container">
+        
+        <div class="section-tape-header">
+          <span class="section-tape-label">Work in the Field</span>
+          <h2 class="section-workbench-title">Experience &amp; Track Record</h2>
+          <p class="section-workbench-sub">
+            A visual journey through building, shipping, and maintaining software, AI models, and infrastructure.
+          </p>
         </div>
-      </div>
-      <div class="skill-group">
-        <h3>MLOps &amp; Infra</h3>
-        <div class="tag-row">
-          <span class="tag">AWS</span><span class="tag">EKS</span><span class="tag">MLflow</span>
-          <span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">Streamlit</span>
-          <span class="tag">DynamoDB</span><span class="tag">Vector DBs</span>
+
+        <div class="workstation-stack">
+
+          <!-- Workstation 01: PEPS-TECH -->
+          <article class="workstation-folder">
+            <div class="washi-tape tape-top-left" aria-hidden="true"></div>
+            <div class="folder-tab-badge">WORKSTATION № 01 // PRODUCTION SYSTEM</div>
+
+            <header class="folder-header-row">
+              <div>
+                <h3 class="folder-role-title">Software Engineer</h3>
+                <div class="folder-org-name">PEPS-TECH Research and Development</div>
+              </div>
+              <time class="folder-dates">Aug 2026 – Present</time>
+            </header>
+
+            <!-- Interactive Architecture Tabs for PEPS Atlas -->
+            <div class="experience-blueprint-box">
+              <div class="blueprint-tabs-nav">
+                <button class="blueprint-tab-btn active" data-target="peps-atlas-tab">Inspect: PEPS Atlas Architecture</button>
+                <button class="blueprint-tab-btn" data-target="peps-edge-tab">Inspect: Embedded &amp; Edge ML</button>
+                <button class="blueprint-tab-btn" data-target="peps-infra-tab">Inspect: Cloud &amp; CI/CD</button>
+              </div>
+
+              <div class="blueprint-panel-content" id="peps-atlas-tab">
+                <strong>PEPS Atlas Delivery:</strong> Owned end-to-end product development from requirements, architecture, database design to production deployment and maintenance using Next.js, TypeScript, Supabase, and Cloudflare Workers.
+              </div>
+
+              <div class="blueprint-panel-content" id="peps-edge-tab" style="display:none;">
+                <strong>Edge Optimization:</strong> Deployed and optimized ML models on Raspberry Pi, microcontrollers, integrating sensors, cameras, and IoT modules for real-time applications.
+              </div>
+
+              <div class="blueprint-panel-content" id="peps-infra-tab" style="display:none;">
+                <strong>Infrastructure &amp; Security:</strong> Database migrations, Supabase services integration, production secrets, security controls, and CI/CD pipelines for automated cloud deployments.
+              </div>
+            </div>
+
+            <!-- Complete Verbatim Resume Bullets -->
+            <ul class="verbatim-bullets-list">
+              <li>Design, develop, and deploy machine learning models for classification, detection, prediction, and automation tasks, and build ML pipelines in Python (NumPy, Pandas, Scikit-learn, TensorFlow, PyTorch).</li>
+              <li>Deploy and optimize ML models on Raspberry Pi, microcontrollers, and other embedded/edge platforms, building real-time applications that integrate sensors, cameras, and IoT modules.</li>
+              <li>Owned end-to-end development of PEPS Atlas, from requirements, system architecture, database design, and development to production deployment and maintenance using Next.js, TypeScript, Supabase, and Cloudflare Workers.</li>
+              <li>Managed data and infrastructure, including database migrations, data integration with external Supabase services, production environment configuration, secrets, security controls, and CI/CD pipelines for automated cloud deployments.</li>
+              <li>Handled the complete product lifecycle, including debugging, production issue resolution, performance/reliability improvements, responsive UI/UX development, feature enhancements, and maintaining the application as a live production system.</li>
+            </ul>
+          </article>
+
+          <!-- Workstation 02: Home Ideas Technologies -->
+          <article class="workstation-folder">
+            <div class="washi-tape tape-top-right" aria-hidden="true"></div>
+            <div class="folder-tab-badge">WORKSTATION № 02 // AGENTIC INFRASTRUCTURE</div>
+
+            <header class="folder-header-row">
+              <div>
+                <h3 class="folder-role-title">AI Software Developer Intern</h3>
+                <div class="folder-org-name">Home Ideas Technologies</div>
+              </div>
+              <time class="folder-dates">Nov 2025 – May 2026</time>
+            </header>
+
+            <!-- Interactive Architecture Tabs for Home Ideas -->
+            <div class="experience-blueprint-box">
+              <div class="blueprint-tabs-nav">
+                <button class="blueprint-tab-btn active" data-target="hit-rag-tab">Inspect: Vigoe.ai RAG Engine</button>
+                <button class="blueprint-tab-btn" data-target="hit-cloud-tab">Inspect: AWS EKS &amp; Docker</button>
+              </div>
+
+              <div class="blueprint-panel-content" id="hit-rag-tab">
+                <strong>Vigoe.ai Product:</strong> Used Pinecone vector database and Fastify agentic backend to orchestrate LLM API calls, tool use, and structured data retrieval, reducing query latency via semantic search layers.
+              </div>
+
+              <div class="blueprint-panel-content" id="hit-cloud-tab" style="display:none;">
+                <strong>Cloud-Native Deployment:</strong> Containerized AI applications with Docker on Amazon EKS, collaborating directly with founders on data ingestion and model serving architecture.
+              </div>
+            </div>
+
+            <!-- Complete Verbatim Resume Bullets -->
+            <ul class="verbatim-bullets-list">
+              <li>Designed and deployed Retrieval-Augmented Generation (RAG) pipelines using vector databases and LLMs for real-time AI-powered features, reducing query latency by integrating semantic search layers.</li>
+              <li>Used Pinecone as the vector database for the Vigoe.ai conversational AI product, enabling efficient similarity search and retrieval for RAG-based features.</li>
+              <li>Built agentic backend workflows using Node.js and Fastify that orchestrated LLM API calls, tool use, and structured data retrieval across web and mobile platforms.</li>
+              <li>Deployed containerized AI applications on AWS using Docker and Amazon EKS, implementing scalable cloud-native infrastructure for production LLM services.</li>
+              <li>Developed responsive web (React) and cross-platform mobile (React Native) interfaces integrated with AI backends, enabling end-to-end product delivery.</li>
+              <li>Collaborated directly with the founding team on architecture decisions for AI system integration, covering data ingestion, model serving, and API design.</li>
+            </ul>
+          </article>
+
+          <!-- Workstation 03: LABMENTIX -->
+          <article class="workstation-folder">
+            <div class="washi-tape tape-top-left" aria-hidden="true"></div>
+            <div class="folder-tab-badge">WORKSTATION № 03 // MODEL EXPERIMENTATION</div>
+
+            <header class="folder-header-row">
+              <div>
+                <h3 class="folder-role-title">AI/ML Intern</h3>
+                <div class="folder-org-name">LABMENTIX</div>
+              </div>
+              <time class="folder-dates">July 2025 – Dec 2025</time>
+            </header>
+
+            <!-- Complete Verbatim Resume Bullets -->
+            <ul class="verbatim-bullets-list">
+              <li>Developed and optimized machine learning and deep learning models for real-world use cases, improving model performance and reliability.</li>
+              <li>Implemented computer vision and data analysis workflows using TensorFlow, PyTorch, and Keras.</li>
+              <li>Built end-to-end ML pipelines covering data preprocessing, feature engineering, model training, experiment tracking (MLflow), and deployment readiness.</li>
+            </ul>
+          </article>
+
         </div>
+
       </div>
-      <div class="skill-group">
-        <h3>Other</h3>
-        <div class="tag-row">
-          <span class="tag">REST APIs</span><span class="tag">Experiment Tracking</span>
-          <span class="tag">Model Deployment</span><span class="tag">Data Pipelines</span>
-          <span class="tag">Structured Data Reasoning</span>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 03: SELECTED WORK (INTERACTIVE PROJECT PLAYGROUND)
+         ======================================================================== -->
+    <section class="workbench-section" id="work-playground">
+      <div class="workbench-container">
+        
+        <div class="section-tape-header">
+          <span class="section-tape-label">Selected Work</span>
+          <h2 class="section-workbench-title">Featured Engineering Stories</h2>
+          <p class="section-workbench-sub">
+            Interactive case studies showcasing agentic AI systems, medical computer vision, MLOps platforms, and automated commerce defense.
+          </p>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="experience">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag">03 / Track record</span>
-      <h2>Experience</h2>
-    </div>
-    <div class="timeline">
-      <div class="t-item">
-        <span class="t-date">Aug 2026 — Present</span>
-        <h3>ML Engineer</h3>
-        <span class="org">PEPS-TECH Research and Development</span>
-        <ul>
-          <li>Design, develop, and deploy machine learning models for classification, detection, prediction, and automation tasks, building ML pipelines in Python (NumPy, Pandas, Scikit-learn, TensorFlow, PyTorch).</li>
-          <li>Deploy and optimize ML models on Raspberry Pi, microcontrollers, and other embedded/edge platforms, building real-time applications that integrate sensors, cameras, and IoT modules.</li>
-          <li>Build APIs and microservices to integrate ML models with applications, managing the data pipeline from collection and preprocessing through training and evaluation.</li>
-          <li>Built a hardware inventory management CRM and tracking system for internal company use, streamlining asset records, stock visibility, and equipment tracking across teams.</li>
-          <li>Collaborate with software, hardware, and IoT teams, prepare technical documentation, and participate in code reviews and deployments.</li>
-        </ul>
-      </div>
-      <div class="t-item">
-        <span class="t-date">Nov 2025 — May 2026</span>
-        <h3>AI Software Developer Intern</h3>
-        <span class="org">Home Ideas Technologies</span>
-        <ul>
-          <li>Designed and deployed Retrieval-Augmented Generation (RAG) pipelines using vector databases and LLMs for real-time AI-powered features, reducing query latency via semantic search layers.</li>
-          <li>Used Pinecone as the vector database for the Vigoe.ai conversational AI product, enabling efficient similarity search and retrieval for RAG-based features.</li>
-          <li>Built agentic backend workflows with Node.js and Fastify orchestrating LLM API calls, tool use, and structured data retrieval across web and mobile platforms.</li>
-          <li>Deployed containerized AI applications on AWS using Docker and Amazon EKS for scalable, cloud-native LLM services.</li>
-          <li>Developed responsive web (React) and cross-platform mobile (React Native) interfaces integrated with AI backends.</li>
-          <li>Collaborated directly with the founding team on architecture decisions covering data ingestion, model serving, and API design.</li>
-        </ul>
-      </div>
-      <div class="t-item">
-        <span class="t-date">Jul 2025 — Dec 2025</span>
-        <h3>AI/ML Intern</h3>
-        <span class="org">LABMENTIX</span>
-        <ul>
-          <li>Developed and optimized machine learning and deep learning models for real-world use cases, improving performance and reliability.</li>
-          <li>Implemented computer vision and data analysis workflows using TensorFlow, PyTorch, and Keras.</li>
-          <li>Built end-to-end ML pipelines covering preprocessing, feature engineering, model training, experiment tracking (MLflow), and deployment readiness.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+        <div class="projects-playground-stack">
 
-<section id="projects">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag">04 / Selected work</span>
-      <h2>Projects</h2>
-    </div>
-  </div>
-  <div class="project-grid">
-    <div class="project-card">
-      <span class="p-tag">Agentic AI</span>
-      <h3>Autonomous Research Agent with Self-Growing Knowledge Base</h3>
-      <p>A fully autonomous LLM agent that decomposes research objectives into sub-tasks via chain-of-thought reasoning and tool use, expanding a vectorized knowledge base through confidence-driven re-research loops. Built with modular, cloud-ready components separating agent logic, retrieval, and generation for scalable deployment, and evaluated on task completion rate, hallucination rate, and retrieval precision.</p>
-      <div class="tech">Python · LLMs · RAG · Hugging Face · FAISS · Vector DBs · Agentic Frameworks</div>
-    </div>
-    <div class="project-card">
-      <span class="p-tag">Computer Vision</span>
-      <h3>GlaucoVision — Automated Glaucoma Detection</h3>
-      <p>A hybrid deep learning system combining GAN-based data augmentation and U-Net segmentation for optic disc/cup detection, with a VAE-CNN classifier computing Cup-to-Disc Ratio for early-stage glaucoma screening under limited labeled data. Structured ablation experiments evaluate each component's contribution, documented for publication.</p>
-      <div class="tech">PyTorch · GAN · U-Net · VAE-CNN · Medical Imaging</div>
-    </div>
-    <div class="project-card">
-      <span class="p-tag">MLOps</span>
-      <h3>Voyage Analytics Platform</h3>
-      <p>An end-to-end cloud-native ML platform covering SQL-based feature engineering, model training, MLflow experiment tracking, Flask REST inference, and Kubernetes (Minikube) orchestration, with a Streamlit dashboard for interactive analysis.</p>
-      <div class="tech">Python · MLflow · Flask · Docker · Kubernetes · Streamlit · SQL</div>
-    </div>
-    <div class="project-card">
-      <span class="p-tag">Hackathon</span>
-      <h3>RazorDefense — Autonomous Revenue Defense Platform</h3>
-      <p>Built at the Razorpay AI Buildathon and later open-sourced: an agentic commerce and revenue-recovery platform where autonomous agents detect failed payments in real time and deploy Gemini-powered shopper agents to win back at-risk revenue through Razorpay's Test Mode. Layered in policy guardrails, customer-consent workflows, real-time merchant monitoring, and tamper-evident audit trails for safe, transparent operation.</p>
-      <div class="tech">Node.js · Gemini · Razorpay API · Agentic Workflows · Policy Guardrails</div>
-    </div>
-  </div>
-</section>
+          <!-- Lead Project: Autonomous Research Agent -->
+          <article class="project-showcase-mat">
+            <div class="washi-tape tape-top-center" aria-hidden="true"></div>
+            <div class="folder-tab-badge" style="color:var(--accent-cobalt);">FEATURED SYSTEM // AGENTIC ARCHITECTURE</div>
 
-<section id="research">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag">05 / Research</span>
-      <h2>Published Work</h2>
-    </div>
-    <div class="research-panel">
-      <h3>Causally-Aware Temporal Graph Neural Network for Stock Influence Prediction</h3>
-      <p class="desc">A hybrid TGNN framework (GAT-GRU) modeling dynamic stock interaction networks — designed end-to-end from problem scoping to statistical validation. Introduces a Temporal Gravity Model and Hybrid Influence Score to capture structural and temporal dependencies in financial graph data, with Granger causality and F-tests validating causal influence beyond correlation.</p>
-      <div class="research-facts">
-        <div><span class="f-num">704</span><span class="f-label">BSE Stocks</span></div>
-        <div><span class="f-num">1,500+</span><span class="f-label">Trading Days</span></div>
-        <div><span class="f-num">GAT-GRU</span><span class="f-label">Architecture</span></div>
-        <div><span class="f-num">Granger</span><span class="f-label">Causal Validation</span></div>
-      </div>
-      <span class="venue">→ Accepted at CIS 2026, NIT Warangal — to be published in the SCOPUS-indexed Springer LNNS series</span>
-    </div>
-  </div>
-</section>
+            <h3 class="project-showcase-title">Autonomous Research Agent with Self-Growing Knowledge Base</h3>
+            
+            <div class="project-tech-ribbon">
+              <span class="tech-pill-tag">Python</span>
+              <span class="tech-pill-tag">LLMs</span>
+              <span class="tech-pill-tag">RAG</span>
+              <span class="tech-pill-tag">Hugging Face</span>
+              <span class="tech-pill-tag">Vector Databases</span>
+              <span class="tech-pill-tag">FAISS</span>
+              <span class="tech-pill-tag">Agentic Frameworks</span>
+              <span class="tech-pill-tag">APIs</span>
+            </div>
 
-<section id="education">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-tag">06 / Education</span>
-      <h2>Academic Background</h2>
-    </div>
-    <div class="edu-list">
-      <div class="edu-item">
-        <span class="yr">2024 – 2026</span>
-        <div>
-          <div class="deg">M.Tech, Artificial Intelligence</div>
-          <div class="inst">Amrita Vishwa Vidyapeetham, Coimbatore</div>
+            <!-- Interactive Agent Loop Simulator -->
+            <div class="agent-simulator-panel">
+              <div class="agent-sim-header">
+                <span>⚡ Interactive Agent Reasoning Loop Simulator</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="sim-status-dot"></span>
+                  <span>AGENT ACTIVE</span>
+                </div>
+              </div>
+
+              <div class="agent-loop-nodes">
+                <button class="agent-node-btn active" data-agent-step="0">
+                  <span class="node-step-tag">PHASE 01</span>
+                  <div class="node-title-sm">Objective Decomp. (CoT)</div>
+                </button>
+                <button class="agent-node-btn" data-agent-step="1">
+                  <span class="node-step-tag">PHASE 02</span>
+                  <div class="node-title-sm">Web &amp; Research Tool Use</div>
+                </button>
+                <button class="agent-node-btn" data-agent-step="2">
+                  <span class="node-step-tag">PHASE 03</span>
+                  <div class="node-title-sm">Confidence &amp; Eval Gate</div>
+                </button>
+                <button class="agent-node-btn" data-agent-step="3">
+                  <span class="node-step-tag">PHASE 04</span>
+                  <div class="node-title-sm">FAISS Knowledge Commit</div>
+                </button>
+              </div>
+
+              <div class="agent-sim-console">
+                <div id="agentConsoleLog">
+                  <span>🧠 Reasoning loop initiated: Decomposing complex objective into sub-tasks via Chain-of-Thought planning...</span>
+                </div>
+                <button class="sim-trigger-btn" id="simTriggerBtn">Next Loop →</button>
+              </div>
+            </div>
+
+            <!-- Verbatim Resume Bullets -->
+            <ul class="verbatim-bullets-list">
+              <li>Designed a fully autonomous LLM agent that decomposes research objectives into sub-tasks using chain-of-thought reasoning and tool-use.</li>
+              <li>Integrated live web and research APIs to collect, process, and structure unstructured data into a continuously expanding vectorized knowledge base with confidence-driven re-research loops. Implemented agent evals to monitor accuracy and reliability.</li>
+              <li>Built modular, cloud-ready components with clean separation of agent logic, retrieval, and generation layers for scalable, real-world deployment.</li>
+            </ul>
+          </article>
+
+          <!-- Twin Supporting Projects -->
+          <div class="projects-twin-container">
+
+            <!-- Project 02: GlaucoVision -->
+            <article class="project-card-workbench">
+              <div>
+                <div class="folder-tab-badge">CASE № 02 // COMPUTER VISION</div>
+                <h3>GlaucoVision: Automated Glaucoma Detection Using GAN, U-Net, and VAE-CNN</h3>
+                
+                <div class="project-tech-ribbon">
+                  <span class="tech-pill-tag">PyTorch</span>
+                  <span class="tech-pill-tag">Deep Learning</span>
+                  <span class="tech-pill-tag">GAN</span>
+                  <span class="tech-pill-tag">U-Net</span>
+                  <span class="tech-pill-tag">VAE-CNN</span>
+                  <span class="tech-pill-tag">Medical Image Processing</span>
+                </div>
+
+                <!-- Interactive Medical Screening Inspector -->
+                <div class="interactive-medical-inspector">
+                  <div class="medical-canvas-view">
+                    <div class="retina-eye-art" id="retinaEyeArt">
+                      <div class="retina-cup-overlay" id="retinaCupOverlay" style="display:none;"></div>
+                    </div>
+                  </div>
+                  <div style="font-family:var(--font-mono); font-size:10px; color:#94A3B8; margin-bottom:8px;" id="medicalCaption">
+                    RAW RETINAL SCAN (LIMITED LABELED DATA)
+                  </div>
+                  <div class="medical-controls">
+                    <button class="medical-toggle-btn active" data-mode="raw">Raw Scan</button>
+                    <button class="medical-toggle-btn" data-mode="segmented">U-Net Bounds</button>
+                    <button class="medical-toggle-btn" data-mode="cdr">CDR Analysis</button>
+                  </div>
+                </div>
+
+                <ul class="verbatim-bullets-list">
+                  <li>Developed a hybrid deep learning system combining GAN-based data augmentation and U-Net segmentation for optic disc and cup detection from retinal images.</li>
+                  <li>Implemented a VAE-CNN architecture for feature extraction and glaucoma classification, reproducing and extending techniques from recent computer vision literature.</li>
+                  <li>Computed Cup-to-Disc Ratio (CDR) to enable accurate and early-stage glaucoma screening under limited labeled data conditions.</li>
+                  <li>Ran structured ablation experiments to evaluate each model component's contribution, documenting findings in a write-up format suitable for publication.</li>
+                </ul>
+              </div>
+            </article>
+
+            <!-- Project 03: Voyage Analytics Platform -->
+            <article class="project-card-workbench">
+              <div>
+                <div class="folder-tab-badge">CASE № 03 // MLOPS PLATFORM</div>
+                <h3>Voyage Analytics Platform – Cloud-Native ML Pipeline</h3>
+                
+                <div class="project-tech-ribbon">
+                  <span class="tech-pill-tag">Python</span>
+                  <span class="tech-pill-tag">ML</span>
+                  <span class="tech-pill-tag">MLflow</span>
+                  <span class="tech-pill-tag">Flask</span>
+                  <span class="tech-pill-tag">Docker</span>
+                  <span class="tech-pill-tag">Kubernetes</span>
+                  <span class="tech-pill-tag">Streamlit</span>
+                  <span class="tech-pill-tag">SQL</span>
+                </div>
+
+                <!-- Interactive Cloud Pipeline Topology -->
+                <div class="interactive-cloud-topology">
+                  <div style="font-family:var(--font-mono); font-size:10px; color:#94A3B8; margin-bottom:8px;">
+                    Interactive Topology Monitor (Click node to inspect):
+                  </div>
+                  <div class="topology-nodes-strip">
+                    <span class="top-node-pill active" data-node="sql">SQL Ingest</span>
+                    <span class="top-arrow">→</span>
+                    <span class="top-node-pill" data-node="mlflow">MLflow</span>
+                    <span class="top-arrow">→</span>
+                    <span class="top-node-pill" data-node="flask">Flask REST</span>
+                    <span class="top-arrow">→</span>
+                    <span class="top-node-pill" data-node="k8s">K8s Minikube</span>
+                    <span class="top-arrow">→</span>
+                    <span class="top-node-pill" data-node="streamlit">Streamlit UI</span>
+                  </div>
+                  <div id="topologyLog" style="font-family:var(--font-mono); font-size:11px; color:#38BDF8; margin-top:10px;">
+                    📊 SQL Feature Engineering: Aggregating temporal features across tabular data pipelines.
+                  </div>
+                </div>
+
+                <ul class="verbatim-bullets-list">
+                  <li>Built an end-to-end machine learning platform covering structured data analysis, SQL-based feature engineering, model training, experiment tracking, and inference.</li>
+                  <li>Managed model versions, metrics, and experiments using MLflow with a reproducible experiment design.</li>
+                  <li>Deployed models via Flask REST APIs, containerized with Docker, and orchestrated using Kubernetes (Minikube).</li>
+                  <li>Delivered a Streamlit-based analytics dashboard for interactive model performance visualization.</li>
+                </ul>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Hackathon Feature: RazorDefense -->
+          <article class="hackathon-workbench-card">
+            <div class="paperclip" aria-hidden="true"></div>
+            
+            <div class="hackathon-tag-header">
+              <span>SPECIAL DISPATCH // HACKATHON &amp; OPEN SOURCE</span>
+              <span>·</span>
+              <span>RAZORPAY AI BUILDATHON</span>
+            </div>
+
+            <h3 class="project-showcase-title">RazorDefense – Autonomous Revenue Defense Platform</h3>
+            
+            <div class="project-tech-ribbon">
+              <span class="tech-pill-tag">Node.js</span>
+              <span class="tech-pill-tag">Gemini</span>
+              <span class="tech-pill-tag">Razorpay API</span>
+              <span class="tech-pill-tag">Agentic Workflows</span>
+              <span class="tech-pill-tag">Policy Guardrails</span>
+            </div>
+
+            <ul class="verbatim-bullets-list">
+              <li>Took part in the Razorpay AI Buildathon and built RazorDefense, an agentic commerce and revenue-recovery platform, which was later open-sourced for the community.</li>
+              <li>Engineered autonomous agents that detect failed payments in real time and formulate bounded recovery strategies, deploying Gemini-powered shopper agents to win back at-risk revenue through Razorpay's Test Mode environment.</li>
+              <li>Layered in policy guardrails, customer-consent workflows, real-time merchant monitoring, and tamper-evident audit trails, ensuring the autonomous system operated safely and transparently.</li>
+            </ul>
+
+            <a href="https://github.com/Charancode1/agentic-commerce-revenue-recovery" target="_blank" rel="noopener noreferrer" class="repo-link-pill">
+              <span>Inspect Open Source Code on GitHub</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+
         </div>
-        <span class="score">CGPA 7.31</span>
+
       </div>
-      <div class="edu-item">
-        <span class="yr">2020 – 2024</span>
-        <div>
-          <div class="deg">B.E., Computer Science and Engineering</div>
-          <div class="inst">Sathyabama Institute of Science and Technology</div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 04: RESEARCH DESK (INTERACTIVE GRAPH NEURAL NETWORK)
+         ======================================================================== -->
+    <section class="workbench-section" id="research-workbench">
+      <div class="workbench-container">
+        
+        <div class="section-tape-header">
+          <span class="section-tape-label">Research Desk</span>
+          <h2 class="section-workbench-title">Empirical Research Artifact</h2>
+          <p class="section-workbench-sub">
+            Investigating dynamic financial graph structures, spatio-temporal attention, and Granger causal validation.
+          </p>
         </div>
-        <span class="score">CGPA 8.74</span>
+
+        <article class="research-workbench-card">
+          <div class="research-paper-tag">PEER-REVIEWED RESEARCH MONOGRAPH</div>
+
+          <h3 class="research-paper-title">
+            Causally-Aware Temporal Graph Neural Network for Stock Influence Prediction
+          </h3>
+
+          <div class="springer-venue-box">
+            <strong>Publication Venue:</strong>
+            <span>Presented research paper at the International Conference on Computational Intelligence and Sustainable Systems (CIS 2026), NIT Warangal (<a href="https://scrs.in/conference/cis2026" target="_blank" rel="noopener noreferrer">scrs.in/conference/cis2026 ↗</a>); to be published in the SCOPUS-indexed Springer Book Series, Lecture Notes in Networks and Systems (LNNS).</span>
+          </div>
+
+          <div class="project-tech-ribbon" style="margin-bottom:20px;">
+            <span class="tech-pill-tag">PyTorch</span>
+            <span class="tech-pill-tag">Temporal GNNs</span>
+            <span class="tech-pill-tag">Graph Attention Networks (GAT)</span>
+            <span class="tech-pill-tag">GRU</span>
+            <span class="tech-pill-tag">Causal Inference</span>
+            <span class="tech-pill-tag">Granger Causality</span>
+            <span class="tech-pill-tag">Statistical Testing</span>
+          </div>
+
+          <!-- Interactive HTML5 Canvas Graph Network Simulation -->
+          <div class="graph-canvas-container">
+            <canvas id="stockGraphCanvas"></canvas>
+            <div class="graph-canvas-overlay">
+              <span id="graphStatusText">STATUS: DYNAMIC GRAPH NETWORK (704 BSE STOCKS)</span>
+              <div style="display:flex; gap:8px;">
+                <button class="graph-ctrl-btn" id="pulseGraphBtn">Inject Granger Pulse</button>
+                <button class="graph-ctrl-btn" id="pauseGraphBtn">Freeze Sim</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empirical Stats Strip -->
+          <div class="empirical-metrics-strip">
+            <div class="metric-chalk-box">
+              <span class="metric-val">704</span>
+              <span class="metric-lbl">BSE Stocks Analyzed</span>
+            </div>
+            <div class="metric-chalk-box">
+              <span class="metric-val">1,500+</span>
+              <span class="metric-lbl">Trading Days Window</span>
+            </div>
+            <div class="metric-chalk-box">
+              <span class="metric-val">GAT-GRU</span>
+              <span class="metric-lbl">Hybrid TGNN Framework</span>
+            </div>
+            <div class="metric-chalk-box">
+              <span class="metric-val">Granger</span>
+              <span class="metric-lbl">Causal F-Test Validation</span>
+            </div>
+          </div>
+
+          <!-- Verbatim Resume Bullets -->
+          <ul class="verbatim-bullets-list">
+            <li style="color: #F8FAFC !important;">Developed a hybrid TGNN framework (GAT-GRU) to model dynamic stock interaction networks over 704 BSE stocks and 1,500+ trading days, designing the research question end-to-end from scoping to evaluation.</li>
+            <li style="color: #F8FAFC !important;">Engineered a Temporal Gravity Model and Hybrid Influence Score to capture both structural and temporal dependencies in financial graph data.</li>
+            <li style="color: #F8FAFC !important;">Applied Granger causality and F-tests to statistically validate causal influence beyond correlation, grounding model outputs in rigorous statistical testing.</li>
+            <li style="color: #F8FAFC !important;">Presented research paper at the International Conference on Computational Intelligence and Sustainable Systems (CIS 2026), NIT Warangal (<a href="https://scrs.in/conference/cis2026" target="_blank" rel="noopener noreferrer" style="color: #93C5FD; text-decoration: underline;">scrs.in/conference/cis2026 ↗</a>); to be published in the SCOPUS-indexed Springer Book Series, Lecture Notes in Networks and Systems (LNNS).</li>
+          </ul>
+        </article>
+
       </div>
-      <div class="edu-item">
-        <span class="yr">2020</span>
-        <div>
-          <div class="deg">HSC</div>
-          <div class="inst">Sri Vijay Vidyalaya Matric Higher Secondary School</div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 05: TECHNICAL CAPABILITIES (PEGBOARD & CONSTELLATION)
+         ======================================================================== -->
+    <section class="workbench-section" id="capabilities-pegboard">
+      <div class="workbench-container">
+        
+        <div class="section-tape-header">
+          <span class="section-tape-label">Toolbox &amp; Constellation</span>
+          <h2 class="section-workbench-title">Technical Capabilities</h2>
+          <p class="section-workbench-sub">
+            The complete, verified inventory of programming languages, machine learning frameworks, and infrastructure tools.
+          </p>
         </div>
-        <span class="score">77%</span>
-      </div>
-      <div class="edu-item">
-        <span class="yr">2018</span>
-        <div>
-          <div class="deg">SSLC</div>
-          <div class="inst">Sri Vijay Vidyalaya Matric Higher Secondary School</div>
+
+        <div class="pegboard-container">
+          <div class="washi-tape tape-top-right" aria-hidden="true"></div>
+
+          <div class="pegboard-categories-grid">
+
+            <!-- Category 1 -->
+            <div class="pegboard-category">
+              <div class="category-tape-label">Programming Languages</div>
+              <ul class="skill-pegs-list">
+                <li class="skill-peg-item">Python</li>
+                <li class="skill-peg-item">SQL</li>
+                <li class="skill-peg-item">JavaScript</li>
+                <li class="skill-peg-item">React</li>
+                <li class="skill-peg-item">React Native</li>
+                <li class="skill-peg-item">Node.js</li>
+                <li class="skill-peg-item">Next.js</li>
+                <li class="skill-peg-item">Nest.js</li>
+              </ul>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="pegboard-category">
+              <div class="category-tape-label">AI &amp; ML</div>
+              <ul class="skill-pegs-list">
+                <li class="skill-peg-item">Large Language Models (LLMs)</li>
+                <li class="skill-peg-item">Agentic AI</li>
+                <li class="skill-peg-item">RAG Pipelines</li>
+                <li class="skill-peg-item">LLM Evaluation (Evals)</li>
+                <li class="skill-peg-item">Prompt Engineering</li>
+                <li class="skill-peg-item">Computer Vision</li>
+                <li class="skill-peg-item">Graph Neural Networks</li>
+              </ul>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="pegboard-category">
+              <div class="category-tape-label">Frameworks &amp; Libraries</div>
+              <ul class="skill-pegs-list">
+                <li class="skill-peg-item">PyTorch</li>
+                <li class="skill-peg-item">Hugging Face</li>
+                <li class="skill-peg-item">TensorFlow</li>
+                <li class="skill-peg-item">Keras</li>
+                <li class="skill-peg-item">Flask</li>
+                <li class="skill-peg-item">Fastify</li>
+              </ul>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="pegboard-category">
+              <div class="category-tape-label">MLOps &amp; Tools</div>
+              <ul class="skill-pegs-list">
+                <li class="skill-peg-item">AWS</li>
+                <li class="skill-peg-item">EKS</li>
+                <li class="skill-peg-item">MLflow</li>
+                <li class="skill-peg-item">Docker</li>
+                <li class="skill-peg-item">Kubernetes</li>
+                <li class="skill-peg-item">Streamlit</li>
+                <li class="skill-peg-item">DynamoDB</li>
+                <li class="skill-peg-item">Vector Databases</li>
+              </ul>
+            </div>
+
+            <!-- Category 5 -->
+            <div class="pegboard-category">
+              <div class="category-tape-label">Other</div>
+              <ul class="skill-pegs-list">
+                <li class="skill-peg-item">REST APIs</li>
+                <li class="skill-peg-item">Experiment Tracking</li>
+                <li class="skill-peg-item">Model Deployment</li>
+                <li class="skill-peg-item">Data Pipelines</li>
+                <li class="skill-peg-item">Structured Data Reasoning</li>
+              </ul>
+            </div>
+
+          </div>
+
         </div>
-        <span class="score">97.8%</span>
+
       </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 06: ACADEMIA & CERTIFICATIONS
+         ======================================================================== -->
+    <section class="workbench-section" id="academic-binder">
+      <div class="workbench-container">
+        
+        <div class="section-tape-header">
+          <span class="section-tape-label">Academic Ledger</span>
+          <h2 class="section-workbench-title">Education &amp; Certifications</h2>
+          <p class="section-workbench-sub">
+            Verified university degrees, academic scores, and specialized technological certifications.
+          </p>
+        </div>
+
+        <div class="academia-workbench-grid">
+
+          <!-- Institutional Education -->
+          <div class="education-binder">
+            <h3 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; margin-bottom:18px;">
+              Academic Background
+            </h3>
+
+            <div class="edu-entry-row">
+              <span class="edu-year">2024 – 2026</span>
+              <div>
+                <div class="edu-degree">M.Tech – Artificial Intelligence</div>
+                <div class="edu-inst">Amrita Vishwa Vidyapeetham, Coimbatore</div>
+              </div>
+              <span class="edu-score-badge">CGPA: 7.31</span>
+            </div>
+
+            <div class="edu-entry-row">
+              <span class="edu-year">2020 – 2024</span>
+              <div>
+                <div class="edu-degree">B.E – Computer Science and Engineering</div>
+                <div class="edu-inst">Sathyabama Institute of Science and Technology</div>
+              </div>
+              <span class="edu-score-badge">CGPA: 8.74</span>
+            </div>
+
+            <div class="edu-entry-row">
+              <span class="edu-year">2020</span>
+              <div>
+                <div class="edu-degree">HSC</div>
+                <div class="edu-inst">Sri Vijay Vidyalaya Matric Higher Secondary School</div>
+              </div>
+              <span class="edu-score-badge">Percentage: 77%</span>
+            </div>
+
+            <div class="edu-entry-row">
+              <span class="edu-year">2018</span>
+              <div>
+                <div class="edu-degree">SSLC</div>
+                <div class="edu-inst">Sri Vijay Vidyalaya Matric Higher Secondary School</div>
+              </div>
+              <span class="edu-score-badge">Percentage: 97.8%</span>
+            </div>
+          </div>
+
+          <!-- Certifications Board -->
+          <div class="certifications-board">
+            <h3 style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; margin-bottom:14px;">
+              Verified Certifications
+            </h3>
+
+            <ul class="cert-stamp-list">
+              <li class="cert-stamp-item">Social and Economic Networks: Models and Analysis – Stanford University Online</li>
+              <li class="cert-stamp-item">Responsible &amp; Safe AI Systems – NPTEL</li>
+              <li class="cert-stamp-item">Introduction to Large Language Models – NPTEL</li>
+              <li class="cert-stamp-item">Geodata Processing Using Python and Machine Learning – ISRO</li>
+              <li class="cert-stamp-item">100 Days of Python Bootcamp – Udemy</li>
+              <li class="cert-stamp-item">Data Science – ExcelR</li>
+              <li class="cert-stamp-item">Full Stack Web Development – Udemy</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 07: CORRESPONDENCE / POSTCARD DISPATCH
+         ======================================================================== -->
+    <section class="workbench-section" id="postcard-connect">
+      <div class="workbench-container">
+        
+        <div class="section-tape-header">
+          <span class="section-tape-label">Postcard Dispatch</span>
+          <h2 class="section-workbench-title">Let's Connect &amp; Build</h2>
+          <p class="section-workbench-sub">
+            Direct channels for engineering collaboration, forward deployed opportunities, and technical discourse.
+          </p>
+        </div>
+
+        <div class="postcard-dispatch-card">
+          <div class="washi-tape tape-top-center" aria-hidden="true"></div>
+          
+          <div class="postcard-stamp-box" aria-hidden="true">
+            <span>AIRMAIL</span>
+            <span style="font-size:14px; margin:4px 0;">📮</span>
+            <span>INDIA</span>
+          </div>
+
+          <div>
+            <h3 class="postcard-headline">
+              Ready to turn complex requirements into <em>resilient software?</em>
+            </h3>
+            <p style="font-size:1.05rem; color:var(--ink-secondary); line-height:1.7; margin-bottom:28px;">
+              Whether you are scoping customer-facing AI deployments, developing agentic workflows, or seeking a Forward Deployed Engineer to carry solutions across the complete product lifecycle, my workbench is open.
+            </p>
+
+            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+              <a href="mailto:k.charankumar73@gmail.com" class="workbench-btn workbench-btn-primary">
+                <span>Send Direct Mail</span>
+                <span aria-hidden="true">✉</span>
+              </a>
+              <a href="Charan_K_M_Tech_Resume.pdf" target="_blank" rel="noopener noreferrer" class="workbench-btn workbench-btn-secondary">
+                <span>Resume Document (PDF)</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-channels-stack">
+            
+            <div class="contact-tile-btn">
+              <span class="contact-lbl">Email</span>
+              <div class="contact-val">
+                <a href="mailto:k.charankumar73@gmail.com">k.charankumar73@gmail.com</a>
+                <button class="copy-mini-btn" data-copy="k.charankumar73@gmail.com" aria-label="Copy email">COPY</button>
+              </div>
+            </div>
+
+            <div class="contact-tile-btn">
+              <span class="contact-lbl">Phone</span>
+              <div class="contact-val">
+                <a href="tel:+919791239230">+91 97912 39230</a>
+                <button class="copy-mini-btn" data-copy="+919791239230" aria-label="Copy phone number">COPY</button>
+              </div>
+            </div>
+
+            <div class="contact-tile-btn">
+              <span class="contact-lbl">LinkedIn</span>
+              <div class="contact-val">
+                <a href="https://linkedin.com/in/k-charan-/" target="_blank" rel="noopener noreferrer">linkedin.com/in/k-charan- ↗</a>
+              </div>
+            </div>
+
+            <div class="contact-tile-btn">
+              <span class="contact-lbl">GitHub</span>
+              <div class="contact-val">
+                <a href="https://github.com/Charancode1" target="_blank" rel="noopener noreferrer">github.com/Charancode1 ↗</a>
+              </div>
+            </div>
+
+            <div class="contact-tile-btn">
+              <span class="contact-lbl">Open Source</span>
+              <div class="contact-val">
+                <a href="https://github.com/Charancode1/agentic-commerce-revenue-recovery" target="_blank" rel="noopener noreferrer">RazorDefense Repo ↗</a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       WORKBENCH FOOTER
+       ======================================================================== -->
+  <footer class="workbench-footer" role="contentinfo">
+    <div class="workbench-container">
+      <span class="footer-doodle-text">Handcrafted with care on the digital workbench ⚡</span>
+      <p>© 2026 Charan K. All rights reserved · Source authoritative from verified curriculum vitae.</p>
     </div>
-    <div class="cert-row">
-      <span class="tag">Social and Economic Networks: Models and Analysis — Stanford</span>
-      <span class="tag">Responsible &amp; Safe AI Systems — NPTEL</span>
-      <span class="tag">Introduction to Large Language Models — NPTEL</span>
-      <span class="tag">Geodata Processing Using Python and ML — ISRO</span>
-      <span class="tag">100 Days of Python Bootcamp — Udemy</span>
-      <span class="tag">Data Science — ExcelR</span>
-      <span class="tag">Full Stack Web Development — Udemy</span>
-    </div>
-  </div>
-</section>
+  </footer>
 
-<section class="contact" id="contact">
-  <div class="wrap contact-inner">
-    <span class="section-tag" style="margin-bottom:20px;">07 / Contact</span>
-    <h2 class="big">Building AI systems, always up for a good <em>collaboration.</em></h2>
-    <div class="contact-links">
-      <a href="mailto:k.charankumar73@gmail.com" class="btn btn-primary">k.charankumar73@gmail.com</a>
-      <a href="tel:+919791239230" class="btn btn-ghost">+91 97912 39230</a>
-      <a href="https://linkedin.com/in/k-charan-/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
-      <a href="https://github.com/Charancode1" target="_blank" rel="noopener" class="btn btn-ghost">GitHub ↗</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <span>© 2026 Charan K</span>
-  <span>Built with care, deployed on GitHub Pages</span>
-</footer>
-
-<script>
-  // Mobile nav toggle
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', open);
-  });
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', false);
-  }));
-
-  // Hero graph animation — nodes labelled with core skill areas,
-  // referencing Charan's graph-neural-network research visually.
-  const canvas = document.getElementById('graph-canvas');
-  const ctx = canvas.getContext('2d');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let W, H, nodes = [];
-  const labels = ['LLM', 'RAG', 'GNN', 'Agentic', 'Vision', 'MLOps', 'Graph', 'Eval'];
-
-  function resize(){
-    W = canvas.width = canvas.offsetWidth * devicePixelRatio;
-    H = canvas.height = canvas.offsetHeight * devicePixelRatio;
-  }
-
-  function initNodes(){
-    nodes = [];
-    const count = window.innerWidth < 720 ? 10 : 16;
-    for(let i=0;i<count;i++){
-      nodes.push({
-        x: Math.random()*W,
-        y: Math.random()*H,
-        vx: (Math.random()-0.5)*0.15*devicePixelRatio,
-        vy: (Math.random()-0.5)*0.15*devicePixelRatio,
-        r: (Math.random()*1.6+1.4)*devicePixelRatio,
-        label: i < labels.length ? labels[i] : null
-      });
-    }
-  }
-
-  function step(){
-    ctx.clearRect(0,0,W,H);
-    for(const n of nodes){
-      n.x += n.vx; n.y += n.vy;
-      if(n.x<0||n.x>W) n.vx*=-1;
-      if(n.y<0||n.y>H) n.vy*=-1;
-    }
-    const maxDist = 260*devicePixelRatio;
-    for(let i=0;i<nodes.length;i++){
-      for(let j=i+1;j<nodes.length;j++){
-        const a=nodes[i], b=nodes[j];
-        const d = Math.hypot(a.x-b.x, a.y-b.y);
-        if(d < maxDist){
-          ctx.strokeStyle = `rgba(94,234,212,${(1-d/maxDist)*0.35})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(a.x,a.y);
-          ctx.lineTo(b.x,b.y);
-          ctx.stroke();
-        }
-      }
-    }
-    for(const n of nodes){
-      ctx.beginPath();
-      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
-      ctx.fillStyle = n.label ? '#F5A623' : '#5EEAD4';
-      ctx.fill();
-      if(n.label){
-        ctx.font = `${11*devicePixelRatio}px 'JetBrains Mono', monospace`;
-        ctx.fillStyle = 'rgba(233,231,225,0.55)';
-        ctx.fillText(n.label, n.x+8*devicePixelRatio, n.y+4*devicePixelRatio);
-      }
-    }
-    if(!reduceMotion) requestAnimationFrame(step);
-  }
-
-  window.addEventListener('resize', () => { resize(); initNodes(); });
-  resize();
-  initNodes();
-  step();
-</script>
-
+  <script src="main.js"></script>
 </body>
 </html>

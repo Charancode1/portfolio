@@ -1,0 +1,13 @@
+{
+  "name": "charan-k-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Charan K — Engineering Field Journal & Portfolio",
+  "scripts": {
+    "dev": "npx -y serve . -l 3000",
+    "start": "npx -y serve . -l 3000",
+    "serve": "npx -y serve . -l 3000"
+  },
+  "author": "Charan K",
+  "license": "MIT"
+}
