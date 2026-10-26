@@ -497,11 +497,34 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   margin-bottom: 14px;
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--ink-muted);
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.widget-title {
+  color: var(--ink-secondary);
+  font-weight: 600;
+}
+
+.widget-tag {
+  color: var(--accent-orange);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: rgba(255, 90, 54, 0.08);
+  border: 1px solid rgba(255, 90, 54, 0.25);
+  padding: 3px 9px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .pipeline-steps-grid {
@@ -1689,6 +1712,13 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .widget-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
   .workstation-folder,
   .sticky-dispatch,
   .project-showcase-mat,
@@ -1845,6 +1875,21 @@ button {
   .agent-loop-nodes {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .widget-header {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .widget-title {
+    font-size: 10px;
+    line-height: 1.45;
+  }
+
+  .widget-tag {
+    font-size: 9.5px;
+    padding: 2px 7px;
   }
 
   .empirical-metrics-strip {
